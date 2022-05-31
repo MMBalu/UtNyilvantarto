@@ -1,0 +1,21 @@
+
+mat-toolbar {
+
+    a { 
+        padding: 15px;
+        color: white;
+        text-decoration-style: solid;
+        text-decoration: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    a:hover, a:focus {
+        background-color: rgb(23, 70, 211);
+    }
+
+    .spacer{
+        flex: 1 1 auto;
+    }
+}

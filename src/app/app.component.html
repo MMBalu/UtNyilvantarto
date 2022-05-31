@@ -1,22 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Út nyilvántartó</a>
-  <button class="navbar-toggler" type="button" 
-  data-toggle="collapse" data-target="#navbarNavAltMarkup" 
-  aria-controls="navbarNavAltMarkup" 
-  aria-expanded="false" 
-  aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="">Termékek</a>
-      <a class="nav-item nav-link" routerLink="product-form">Új termék</a>
-      <a class="nav-item nav-link" routerLink="user-form">Felhasználók</a>
-      <a class="nav-item nav-link" routerLink="category-form">Kategória</a>
-    </div>
-  </div>
-</nav>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <mat-icon class="app-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+    <span>
+      <a class="nav-item nav-link" routerLink="">Út nyílvántartó App</a>
+    </span>
+    <span class="spacer"></span>
+    <span>
+      <a class="nav-item nav-link" routerLink="">Nyilvántartás</a>
+      <a class="nav-item nav-link" routerLink="product-form">Autók</a>
+      <a class="nav-item nav-link" routerLink="user-form">Sofőrök</a>
+      <!-- 
+      <a class="nav-item nav-link" routerLink="category-form">tartalék</a>
+      -->
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-<div class="container fluid">
+<div class="container-fluid">
   <router-outlet></router-outlet>
 </div>

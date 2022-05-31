@@ -8,15 +8,17 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start-backend": "cd BackEnd && ts-node-dev src/index.ts",
-    "all-install":"npm install && cd BackEnd && npm install"
+    "all-install": "npm install && cd BackEnd && npm install"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.2.0",
+    "@angular/cdk": "^13.3.8",
     "@angular/common": "~13.2.0",
     "@angular/compiler": "~13.2.0",
     "@angular/core": "~13.2.0",
     "@angular/forms": "~13.2.0",
+    "@angular/material": "^13.3.8",
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
