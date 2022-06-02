@@ -4,7 +4,7 @@ import { Trip } from "./Trip";
 @Entity()
 export class Driver {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number;   
 
     @Column()
     name: string;
@@ -13,7 +13,7 @@ export class Driver {
     birthdate: Date;
 
     @Column()
-    address: string;
+    address: string;    
 
     @Column()
     licenseNumber: string;

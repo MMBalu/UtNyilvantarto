@@ -1,6 +1,7 @@
 export interface Car{
-    licenseNumber: string;
+    id: number;
     type: string;
+    licenseNumber: string;
     fuelType: string;
     consumption: number;
     kmAge: number;

@@ -6,7 +6,7 @@ import { Driver } from "./Driver";
 export class Trip{
 
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @ManyToOne(Type => Car, car => car.trips)
     car: Car;

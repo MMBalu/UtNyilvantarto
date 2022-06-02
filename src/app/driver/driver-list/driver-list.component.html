@@ -1,0 +1,55 @@
+
+<div class="container mat-elevation-z8">
+  <mat-table #driverTable [dataSource]="dataSource" matSort class="mat-cell">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Név</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="licenseNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Jogosítvány szám</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.licenseNumber}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="licenseExpireDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Jogosítvány lájarati dátum</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.licenseExpireDate| date :'yyyy/MM/dd'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="birthdate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Születési dátum</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.birthdate| date :'yyyy/MM/dd'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Lakcím</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.address}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="buttons">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addNew()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" > <!-- (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)"-->
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" > <!-- (click)="deleteItem(i, row.id, row.title, row.state, row.url)"-->
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 20, 50, 100]"
+      showFirstLastButtons 
+      aria-label="oldal">
+    </mat-paginator>
+
+    <div class="no-results" [style.display]="dataSource.data.length == 0 ? '' : 'none'">
+        Nincs eredmény
+    </div>
+</div>

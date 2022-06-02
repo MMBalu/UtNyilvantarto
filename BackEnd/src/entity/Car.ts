@@ -5,10 +5,13 @@ import { Trip } from "./Trip";
 export class Car{
 
     @PrimaryGeneratedColumn()
-    licenseNumber: string;
+    id: number;
 
     @Column({ type: 'text', nullable: false })
     type: string;
+
+    @Column({ type: 'text', nullable: false })
+    licenseNumber: string;
 
     @Column({ type: 'text', nullable: false })
     fuelType: string;

@@ -75,7 +75,8 @@
               "browserTarget": "UtNyilvantarto:build:production"
             },
             "development": {
-              "browserTarget": "UtNyilvantarto:build:development"
+              "browserTarget": "UtNyilvantarto:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
