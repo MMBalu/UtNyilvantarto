@@ -26,4 +26,9 @@ export class DriverService {
     //return await this.http.post<User>('/api/users', user).toPromise();
     return await lastValueFrom(this.http.post<Driver>('/api/drivers', driver));
   }
+
+  async put(driver: Driver){
+    //return await this.http.post<User>('/api/users', user).toPromise();
+    return await lastValueFrom(this.http.put<Driver>('/api/drivers', driver));
+  }
 }

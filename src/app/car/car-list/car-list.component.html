@@ -1,25 +1,25 @@
 
 <div class="container mat-elevation-z8">
-  <mat-table #driverTable [dataSource]="dataSource" matSort class="mat-cell">
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Név</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+  <mat-table #carTable [dataSource]="dataSource" matSort class="mat-cell">
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Típus</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.type}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="licenseNumber">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Jogosítvány szám</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Rendszám</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.licenseNumber}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="licenseExpireDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Jogosítvány lájarati dátum</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.licenseExpireDate| date :'yyyy/MM/dd'}}</mat-cell>
+    <ng-container matColumnDef="fuelType">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Üzemanyag típus</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.fuelType}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="birthdate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Születési dátum</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.birthdate| date :'yyyy/MM/dd'}}</mat-cell>
+    <ng-container matColumnDef="consumption">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fogyasztás[egység/100Km]</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.consumption}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="address">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Lakcím</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.address}}</mat-cell>
+    <ng-container matColumnDef="kmAge">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Kezdő Km</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.kmAge}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="buttons">
       <mat-header-cell *matHeaderCellDef>
@@ -52,4 +52,4 @@
     <div class="no-results" [style.display]="dataSource.data.length == 0 ? '' : 'none'">
         Nincs eredmény
     </div>
-</div>
+  </div>

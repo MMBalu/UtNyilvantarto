@@ -1,5 +1,6 @@
 <div class="container">
-    <h3 mat-dialog-title>Új sofőr hozzáadása</h3>
+    <h3 *ngIf="data.edit === false" mat-dialog-title>Új sofőr hozzáadása</h3>
+    <h3 *ngIf="data.edit === true" mat-dialog-title>Sofőr szerkesztése</h3>
   
     <form class="mat-dialog-content" (ngSubmit)="submit" [formGroup]="driverControl" >
   
@@ -18,14 +19,14 @@
             <mat-hint>17 és 100 év közötti. (YYYY/MM/DD)</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <mat-error *ngIf="formControl.invalid">{{getErrorMessage("birthdate")}}</mat-error>
+            <mat-error *ngIf="driverControl.get('birthdate')!.invalid">{{getErrorMessage("birthdate")}}</mat-error>
           </mat-form-field>
       </div>
 
       <div class="form">
         <mat-form-field color="accent">
           <input matInput #input class="form-control" placeholder="Lakcím"  formControlName="address" >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage("address")}}</mat-error>
+          <mat-error *ngIf="driverControl.get('birthdate')!.invalid">{{getErrorMessage("address")}}</mat-error>
         </mat-form-field>
       </div>
 
@@ -53,8 +54,10 @@
         <button mat-flat-button (click)="cancel()" tabindex="-1">Cancel</button>
       </div>
     </form>
+    <!--
     <button mat-flat-button (click)="teszt()" tabindex="-1">teszt()</button>
     <p>driverControl value: {{driverControl.value | json}}</p>
     <p>driverControl status: {{driverControl.status}}</p>
     <p>driverContorl jogsi: {{driverControl.get('licenseNumber')}}</p>
+    -->
   </div>

@@ -1,0 +1,61 @@
+<div class="container">
+    <h3 *ngIf="data.edit === false" mat-dialog-title>Új autó hozzáadása</h3>
+    <h3 *ngIf="data.edit === true" mat-dialog-title>Autó szerkesztése</h3>
+  
+    <form class="mat-dialog-content" (ngSubmit)="submit" [formGroup]="carControl" >
+  
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput #input class="form-control" placeholder="Típus"  required formControlName="type">
+          <mat-error *ngIf="carControl.get('type')!.invalid">{{getErrorMessage('type')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput #input class="form-control" placeholder="Rendszám"  formControlName="licenseNumber" >
+          <mat-hint>formátum: ABC-123</mat-hint>
+          <mat-error *ngIf="carControl.get('licenseNumber')!.invalid">{{getErrorMessage("licenseNumber")}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <mat-label>Üzemanyag típus</mat-label>
+          <mat-select formControlName="fuelType" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let fuelType of fuels" [value]="fuelType">
+              {{fuelType}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="carControl.get('fuelType')!.invalid">{{getErrorMessage("fuelType")}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput type="number" class="form-control" placeholder="Fogyasztás"  formControlName="consumption" >
+          <mat-error *ngIf="carControl.get('consumption')!.invalid">{{getErrorMessage("consumption")}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput type="number" class="form-control" placeholder="Kezdő Km"  formControlName="kmAge" >
+          <mat-error *ngIf="carControl.get('kmAge')!.invalid">{{getErrorMessage("kmAge")}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div mat-dialog-actions>
+        <button mat-flat-button color="primary" [type]="submit" [disabled]="!carControl.valid" (click)="confirmAdd()">Save</button>
+        <button mat-flat-button (click)="cancel()" tabindex="-1">Cancel</button>
+      </div>
+    </form>
+
+    <button mat-flat-button (click)="teszt()" tabindex="-1">teszt()</button>
+    <!-- 
+    <p>carControl value: {{carControl.value | json}}</p>
+    <p>carControl status: {{carControl.status}}</p>
+    <p>carContorl jogsi: {{carControl.get('licenseNumber')}}</p>
+  -->
+  </div>

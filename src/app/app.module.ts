@@ -19,12 +19,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { AddDialogCarComponent } from './car/add-dialog/add-dialog.component';
+import { CarListComponent } from './car/car-list/car-list.component';
+import { MatSelectModule } from '@angular/material/select';
+import { DeleteDriverDialogComponent } from './driver/delete-driver-dialog/delete-driver-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DriverListComponent,
-    AddDialogComponent    
+    AddDialogComponent,
+    CarListComponent,
+    AddDialogCarComponent,
+    DeleteDriverDialogComponent  
   ],
   imports: [
     BrowserModule,
@@ -41,6 +48,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
+    MatSelectModule,
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule

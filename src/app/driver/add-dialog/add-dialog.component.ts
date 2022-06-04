@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Driver } from 'src/app/models/Driver';
 import { DriverService } from 'src/app/services/driver.service';
+import { UniqueValidationService } from 'src/app/services/unique-validation.service';
 
 @Component({
   selector: 'app-add-dialog',
@@ -18,29 +19,32 @@ export class AddDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<AddDialogComponent>,
-    private driverService: DriverService
+    private driverService: DriverService,
+    private uniqueValidator: UniqueValidationService,
+    @Inject(MAT_DIALOG_DATA) public data: { driver: Driver| null | undefined, edit: boolean} 
   ) { 
     const currentDate: Date = new Date();
     this.minBirthDate = new Date(currentDate.getTime() - 100*365*24*60*60*1000);
     this.maxBirthDate = new Date(currentDate.getTime() - 17*365*24*60*60*1000);
     this.minLicenseExpireDate = currentDate;
     this.maxLicenseExpireDate = new Date(currentDate.getTime() + 10*365*24*60*60*1000);
+
+
+    console.log(this.data);
+    
+    if(this.data.edit === true){
+      this.driverControl.get('id')!.setValue(this.data.driver?.id);
+      this.driverControl.get('name')!.setValue(this.data.driver?.name);
+      this.driverControl.get('birthdate')!.setValue(this.data.driver?.birthdate);
+      this.driverControl.get('address')!.setValue(this.data.driver?.address);
+      this.driverControl.get('licenseNumber')!.setValue(this.data.driver?.licenseNumber);
+      this.driverControl.get('licenseExpireDate')!.setValue(this.data.driver?.licenseExpireDate);
+    }
   }
 
-  driver!: Driver/* =
-  
-  {
-    id:0,
-    name:'',
-    birthdate: new Date(''),
-    address:'',
-    licenseNumber: '',
-    licenseExpireDate: new Date('')
-  };
-*/
-
   driverControl = new FormGroup({
-    name: new FormControl('sanyi',[
+    id: new FormControl(''),
+    name: new FormControl('',[
       Validators.required
     ]),
     birthdate:  new FormControl('',[
@@ -49,10 +53,11 @@ export class AddDialogComponent implements OnInit {
     address:  new FormControl('',[
       Validators.required
     ]),
-    licenseNumber:  new FormControl('',[
-      Validators.required,
-      Validators.email
-    ]),
+    licenseNumber:  new FormControl('', {
+      validators:  [Validators.required],
+      asyncValidators: [],
+      //updateOn: "blur" 
+    }),
     licenseExpireDate:  new FormControl('',[
       Validators.required
     ])
@@ -62,7 +67,7 @@ export class AddDialogComponent implements OnInit {
   }
 
   teszt(){
-    console.log(this.driverControl.get('licenseExpireDate')?.errors);
+    console.log(this.driverControl);
   }
 
   formControl = new FormControl('', [
@@ -81,8 +86,6 @@ export class AddDialogComponent implements OnInit {
       controller.hasError('matDatepickerMax') && child === 'licenseExpireDate' ? 'Magyarországon maximum 10 évre adnak jogosítványt!' :
       controller.hasError('matDatepickerMin') && child === 'licenseExpireDate' ? 'Lejárt jogosítvány nem lehet felvinni!' :
         '';
-    
-    
   }
 
   submit() {
@@ -91,11 +94,12 @@ export class AddDialogComponent implements OnInit {
   }
 
   cancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(-1);
   }
 
   async confirmAdd(): Promise<void> {
-    await this.driverService.post(this.driver);
+    if(this.data.edit === false) await this.driverService.post(this.driverControl.value);
+    if(this.data.edit === true) await this.driverService.put(this.driverControl.value);
     this.dialogRef.close(1);
   }
 }

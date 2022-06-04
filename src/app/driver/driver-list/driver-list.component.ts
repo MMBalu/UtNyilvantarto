@@ -41,7 +41,33 @@ export class DriverListComponent implements OnInit, AfterViewInit {
   }
 
   addNew() {
-    const dialogRef = this.dialog.open(AddDialogComponent);
+    const dialogRef = this.dialog.open(
+      AddDialogComponent,
+      {
+        data: {edit: false}
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.loadDrivers();
+      }
+    });
+  }
+
+  startEdit(id: number) {
+    let driver: any = {};
+
+    for(let d of this.drivers){
+      if(d.id === id) driver = d;
+    }
+
+    const dialogRef = this.dialog.open(
+      AddDialogComponent,
+      {
+        data: {driver: driver, edit: true}
+      }
+      );
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
