@@ -1,42 +1,38 @@
 <div class="container">
     <h3 mat-dialog-title>Új sofőr hozzáadása</h3>
   
-    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <form class="mat-dialog-content" (ngSubmit)="submit" [formGroup]="driverControl" >
   
       <div class="form">
         <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Név" 
-            [(ngModel)]="driver.name" name="driver.name" required >
-
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <input matInput #input class="form-control" placeholder="Név"  required formControlName="name">
+          <mat-error *ngIf="driverControl.get('name')!.invalid">{{getErrorMessage('name')}}</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form">
           <mat-form-field color="accent">
             <mat-label>Születési dátum</mat-label>
-            <input matInput [matDatepicker]="picker" [min]="minBirthDate" [max]="maxBirthDate"
-                [(ngModel)]="driver.birthdate" name="driver.birthdate" required>
+            <input matInput [matDatepicker]="picker" [min]="minBirthDate" [max]="maxBirthDate" formControlName="birthdate">
 
             <mat-hint>17 és 100 év közötti. (YYYY/MM/DD)</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="formControl.invalid">{{getErrorMessage("birthdate")}}</mat-error>
           </mat-form-field>
       </div>
 
       <div class="form">
         <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Lakcím" 
-            [(ngModel)]="driver.address" name="driver.address" required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <input matInput #input class="form-control" placeholder="Lakcím"  formControlName="address" >
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage("address")}}</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form">
         <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Jogosítvány szám" 
-              [(ngModel)]="driver.licenseNumber" name="driver.licenseNumber" required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}} </mat-error>
+          <input matInput #input class="form-control" placeholder="Jogosítvány szám" formControlName="licenseNumber" >
+          <mat-error>{{getErrorMessage('licenseNumber')}} </mat-error>
         </mat-form-field>
       </div>
 
@@ -44,53 +40,21 @@
           <mat-form-field color="accent">
             <mat-label>Jogosítvány lejárati dátum</mat-label>
             <input matInput [matDatepicker]="picker2" [min]="minLicenseExpireDate" [max]="maxLicenseExpireDate"
-               [(ngModel)]="driver.licenseExpireDate" name="driver.licenseExpireDate" required>
+            formControlName="licenseExpireDate">
             <mat-hint>Jelenleg is érvényes. (YYYY/MM/DD)</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
-            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}} {{formControl.getError}}</mat-error>
+            <mat-error>{{getErrorMessage("licenseExpireDate")}}</mat-error>
           </mat-form-field>
       </div>
 
-  <!--
-      <!-Textarea for demo purposes->
-      <div class="form">
-        <mat-form-field color="accent">
-          <textarea matInput #input class="form-control" placeholder="Title" [(ngModel)]="data.title" name="title" required ></textarea>
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
-  
-      <!-Contains mat-hint for characters count and has maxLengt set->
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput #inputstate class="form-control" placeholder="State" [(ngModel)]="data.state" name="state" maxlength="10" required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-          <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
-        </mat-form-field>
-      </div>
-  
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput placeholder="Url" [(ngModel)]="data.url" name="url">
-        </mat-form-field>
-      </div>
-  
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput placeholder="Created at" [(ngModel)]="data.created_at" name="created_at">
-        </mat-form-field>
-      </div>
-  
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput placeholder="Updated at" [(ngModel)]="data.updated_at" name="updated_at">
-        </mat-form-field>
-      </div>
-    -->
       <div mat-dialog-actions>
-        <button mat-flat-button color="primary" [type]="submit" [disabled]="!formControl.valid" (click)="confirmAdd()">Save</button>
+        <button mat-flat-button color="primary" [type]="submit" [disabled]="!driverControl.valid" (click)="confirmAdd()">Save</button>
         <button mat-flat-button (click)="cancel()" tabindex="-1">Cancel</button>
       </div>
     </form>
+    <button mat-flat-button (click)="teszt()" tabindex="-1">teszt()</button>
+    <p>driverControl value: {{driverControl.value | json}}</p>
+    <p>driverControl status: {{driverControl.status}}</p>
+    <p>driverContorl jogsi: {{driverControl.get('licenseNumber')}}</p>
   </div>

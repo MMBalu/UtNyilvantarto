@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Driver } from 'src/app/models/Driver';
 import { DriverService } from 'src/app/services/driver.service';
@@ -27,7 +27,8 @@ export class AddDialogComponent implements OnInit {
     this.maxLicenseExpireDate = new Date(currentDate.getTime() + 10*365*24*60*60*1000);
   }
 
-  driver: Driver =
+  driver!: Driver/* =
+  
   {
     id:0,
     name:'',
@@ -36,8 +37,32 @@ export class AddDialogComponent implements OnInit {
     licenseNumber: '',
     licenseExpireDate: new Date('')
   };
+*/
+
+  driverControl = new FormGroup({
+    name: new FormControl('sanyi',[
+      Validators.required
+    ]),
+    birthdate:  new FormControl('',[
+      Validators.required
+    ]),
+    address:  new FormControl('',[
+      Validators.required
+    ]),
+    licenseNumber:  new FormControl('',[
+      Validators.required,
+      Validators.email
+    ]),
+    licenseExpireDate:  new FormControl('',[
+      Validators.required
+    ])
+  })
 
   ngOnInit(): void {
+  }
+
+  teszt(){
+    console.log(this.driverControl.get('licenseExpireDate')?.errors);
   }
 
   formControl = new FormControl('', [
@@ -45,14 +70,24 @@ export class AddDialogComponent implements OnInit {
     // Validators.email,
   ]);
 
-  getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Kötelező mező' :
-      this.formControl.hasError('email') ? 'Helytelen e-mail cím' :
+  getErrorMessage(child: string) {
+    let controller = this.driverControl.get(child);
+    if (!controller) return null;
+    return controller.hasError('matDatepickerParse') ? 'Nem megfelelő formátum!' : //matDatepickerParse
+      controller.hasError('required') ? 'Kötelező mező' :
+      controller.hasError('email') ? 'Helytelen e-mail cím' :
+      controller.hasError('matDatepickerMax') && child === 'birthdate' ? 'Túl fiatal!' :
+      controller.hasError('matDatepickerMin') && child === 'birthdate' ? 'Túl idős!' :
+      controller.hasError('matDatepickerMax') && child === 'licenseExpireDate' ? 'Magyarországon maximum 10 évre adnak jogosítványt!' :
+      controller.hasError('matDatepickerMin') && child === 'licenseExpireDate' ? 'Lejárt jogosítvány nem lehet felvinni!' :
         '';
+    
+    
   }
 
   submit() {
   // empty
+    //this.driverControl.get('name')
   }
 
   cancel(): void {
