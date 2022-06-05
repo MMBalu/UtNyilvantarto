@@ -1,1 +1,41 @@
-<p>delete-driver-dialog works!</p>
+<div class="container">
+    <h3 mat-dialog-title>Sofőr Törlése</h3>
+  
+    <div class="form">
+        <p>Biztosan törlöd a következőt?</p>
+        
+        <table>
+            <tr>
+                <td>Név:</td>
+                <td>{{data.driver.name}}</td>
+            </tr>
+            <tr>
+                <td>Születésnap:</td>
+                <td>{{data.driver.birthdate | date :'yyyy/MM/dd'}}</td>
+            </tr><tr>
+                <td>Lakcím:</td>
+                <td>{{data.driver.address}}</td>
+            </tr><tr>
+                <td>Jogosítvány sz:</td>
+                <td>{{data.driver.licenseNumber}}</td>
+            </tr><tr>
+                <td>J. lejár: </td>
+                <td>{{data.driver.licenseExpireDate | date :'yyyy/MM/dd'}}</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div mat-dialog-actions>
+    <button mat-flat-button color="warn" (click)="confirm()">OK</button>
+    <button mat-flat-button (click)="cancel()" tabindex="-1">Mégse</button>
+    </div>
+    <!--
+        id: number;
+        name: string;
+        birthdate: Date;
+        address: string;
+        licenseNumber: string;
+        licenseExpireDate: Date;
+    -->
+  </div>

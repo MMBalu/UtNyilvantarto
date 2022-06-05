@@ -11,6 +11,5 @@ export interface Trip{
     arrivalAddress: string;
     distance: number;
     newKmAge: number;
-   
 }
 

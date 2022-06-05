@@ -28,7 +28,11 @@ export class DriverService {
   }
 
   async put(driver: Driver){
-    //return await this.http.post<User>('/api/users', user).toPromise();
     return await lastValueFrom(this.http.put<Driver>('/api/drivers', driver));
+  }
+
+  async delete(driver: Driver){
+    let i : number = driver.id
+    return await lastValueFrom(this.http.delete<Driver>('/api/drivers/' + i));
   }
 }

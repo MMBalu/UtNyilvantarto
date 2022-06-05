@@ -1,0 +1,41 @@
+<div class="container">
+    <h3 mat-dialog-title>Sofőr Törlése</h3>
+  
+    <div class="form">
+        <p>Biztosan törlöd a következőt?</p>
+        
+        <table>
+            <tr>
+                <td>Típus:</td>
+                <td>{{data.car.type}}</td>
+            </tr>
+            <tr>
+                <td>Rendszám:</td>
+                <td>{{data.car.licenseNumber}}</td>
+            </tr><tr>
+                <td>Üzemanyag:</td>
+                <td>{{data.car.fuelType}}</td>
+            </tr><tr>
+                <td>Fogyasztás:</td>
+                <td>{{data.car.consumption}}</td>
+            </tr><tr>
+                <td>Kezdő Km: </td>
+                <td>{{data.car.kmAge}}</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div mat-dialog-actions>
+    <button mat-flat-button color="warn" (click)="confirm()">OK</button>
+    <button mat-flat-button (click)="cancel()" tabindex="-1">Mégse</button>
+    </div>
+    <!--
+        id: number;
+        type: string;
+        licenseNumber: string;
+        fuelType: string;
+        consumption: number;
+        kmAge: number;
+    -->
+  </div>

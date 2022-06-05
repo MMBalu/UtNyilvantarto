@@ -11,7 +11,9 @@
     </ng-container>
     <ng-container matColumnDef="licenseExpireDate">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Jogosítvány lájarati dátum</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.licenseExpireDate| date :'yyyy/MM/dd'}}</mat-cell>
+      <mat-cell *matCellDef="let row" [ngClass]="{'make-bold': isLicenseExpired(row.licenseExpireDate)}"> 
+        {{row.licenseExpireDate | date :'yyyy/MM/dd'}}
+      </mat-cell>
     </ng-container>
     <ng-container matColumnDef="birthdate">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Születési dátum</mat-header-cell>
@@ -33,14 +35,16 @@
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button mat-icon-button color="warn" > <!-- (click)="deleteItem(i, row.id, row.title, row.state, row.url)"-->
+        <button mat-icon-button color="warn" (click)="deleteItem(row.id)"> <!-- -->
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row [ngClass]="{'make-red': isLicenseExpired(row.licenseExpireDate)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    <!--<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'make-gold': row.IsGranted }">-->
   </mat-table>
 
     <mat-paginator 

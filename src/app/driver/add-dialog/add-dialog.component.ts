@@ -20,7 +20,6 @@ export class AddDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<AddDialogComponent>,
     private driverService: DriverService,
-    private uniqueValidator: UniqueValidationService,
     @Inject(MAT_DIALOG_DATA) public data: { driver: Driver| null | undefined, edit: boolean} 
   ) { 
     const currentDate: Date = new Date();

@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { Car } from 'src/app/models/Car';
 import { CarService } from 'src/app/services/car.service';
 import { AddDialogCarComponent } from '../add-dialog/add-dialog.component';
+import { DeleteCarDialogComponent } from '../delete-car-dialog/delete-car-dialog.component';
 
 @Component({
   selector: 'app-car-list',
@@ -83,5 +84,24 @@ export class CarListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  deleteItem(id: number){
+    let car: any = {};
+
+    for(let c of this.cars){
+      if(c.id === id) car = c;
+    }
+    const dialogRef = this.dialog.open(
+      DeleteCarDialogComponent,
+      {
+        data: {car: car}
+      }
+      );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.loadCars();
+      }
+    });
+  }
 
 }

@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { Driver } from 'src/app/models/Driver';
 import { DriverService } from 'src/app/services/driver.service';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { DeleteDriverDialogComponent } from '../delete-driver-dialog/delete-driver-dialog.component';
 
 @Component({
   selector: 'app-driver-list',
@@ -29,7 +30,22 @@ export class DriverListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  
+  isLicenseExpired(date: Date): boolean{
+    const expireDate = new Date(date);
+    expireDate.setMilliseconds(0);
+    expireDate.setSeconds(0);
+    expireDate.setMinutes(0);
+    expireDate.setHours(0);
+
+    const today = new Date();
+    today.setMilliseconds(0);
+    today.setSeconds(0);
+    today.setMinutes(0);
+    today.setHours(0);
+    
+      if(expireDate.getTime() < today.getTime()) return true;
+      else return false;
+  }
 
   async ngOnInit(): Promise<void> {
      this.loadDrivers();
@@ -76,5 +92,23 @@ export class DriverListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  deleteItem(id: number){
+    let driver: any = {};
 
+    for(let d of this.drivers){
+      if(d.id === id) driver = d;
+    }
+    const dialogRef = this.dialog.open(
+      DeleteDriverDialogComponent,
+      {
+        data: {driver: driver}
+      }
+      );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.loadDrivers();
+      }
+    });
+  }
 }

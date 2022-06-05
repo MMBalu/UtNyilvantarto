@@ -29,4 +29,9 @@ export class CarService {
   async put(car: Car){
     return await lastValueFrom(this.http.put<Car>('/api/cars', car));
   }
+
+  async delete(car: Car){
+    let i : number = car.id
+    return await lastValueFrom(this.http.delete<Car>('/api/cars/' + i));
+  }
 }

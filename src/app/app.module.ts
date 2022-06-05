@@ -23,6 +23,7 @@ import { AddDialogCarComponent } from './car/add-dialog/add-dialog.component';
 import { CarListComponent } from './car/car-list/car-list.component';
 import { MatSelectModule } from '@angular/material/select';
 import { DeleteDriverDialogComponent } from './driver/delete-driver-dialog/delete-driver-dialog.component';
+import { DeleteCarDialogComponent } from './car/delete-car-dialog/delete-car-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DeleteDriverDialogComponent } from './driver/delete-driver-dialog/delet
     AddDialogComponent,
     CarListComponent,
     AddDialogCarComponent,
-    DeleteDriverDialogComponent  
+    DeleteDriverDialogComponent,
+    DeleteCarDialogComponent  
   ],
   imports: [
     BrowserModule,
