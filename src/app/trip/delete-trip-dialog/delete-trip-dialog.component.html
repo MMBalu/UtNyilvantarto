@@ -1,0 +1,57 @@
+<div class="container">
+    <h3 mat-dialog-title>Utazás Törlése</h3>
+  
+    <div class="form">
+        <p>Biztosan törlöd a következőt?</p>
+        
+        <table>
+            <tr>
+                <td>Autó:</td>
+                <td>{{data.trip.car.type}}</td>
+                <td>r.sz.: {{data.trip.car.licenseNumber}}</td>
+            </tr>
+            <tr>
+                <td>Sofőr:</td>
+                <td>{{data.trip.driver.name}}</td>
+                <td>j.sz.: {{data.trip.driver.licenseNumber}}</td>
+            </tr><tr>
+                <td>Dátum</td>
+                <td>{{data.trip.date | date :'yyyy/MM/dd'}}</td>
+            </tr><tr>
+                <td>Utazás jellege:</td>
+                <td>{{data.trip.tripType}}</td>
+            </tr><tr>
+                <td>Indulási cím: </td>
+                <td>{{data.trip.departureAddress}}</td>
+            </tr><tr>
+                <td>Érkezési cím: </td>
+                <td>{{data.trip.arrivalAddress}}</td>
+            </tr><tr>
+                <td>Távolság: </td>
+                <td>{{data.trip.distance}}</td>
+            </tr><tr>
+                <td>Új Kmóra állás: </td>
+                <td>{{data.trip.newKmAge}}</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div mat-dialog-actions>
+    <button mat-flat-button color="warn" (click)="confirm()">OK</button>
+    <button mat-flat-button (click)="cancel()" tabindex="-1">Mégse</button>
+    </div>
+    <!--
+        export interface Trip{
+            id:number;
+            car: Car;
+            driver: Driver;
+            date: Date;
+            tripType: string;
+            departureAddress: string;
+            arrivalAddress: string;
+            distance: number;
+            newKmAge: number;
+        }
+    -->
+  </div>

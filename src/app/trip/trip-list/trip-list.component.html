@@ -1,0 +1,91 @@
+<div class="container mat-elevation-z8">
+    <mat-table #tripTable [dataSource]="dataSource" matSort class="mat-cell">
+      <ng-container matColumnDef="car">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Autó</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p>{{row.car.type}} <br/> <small>r.sz.: {{row.car.licenseNumber}}</small></p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="driver">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sofőr</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p>{{row.driver.name}} <br/> <small>j.sz.: {{row.driver.licenseNumber}}</small></p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Dátum</mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+          {{row.date | date :'yyyy. MM. dd. HH:mm'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tripType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Típus</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.tripType}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="departureAddress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Indulási cím</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.departureAddress}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="arrivalAddress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Érkezési cím</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.arrivalAddress}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="distance">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Távolság</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.distance}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="newKmAge">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Új Kmóra állás</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.newKmAge}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="buttons">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="accent" (click)="addNew()"> <!--  -->
+            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+          </button>
+        </mat-header-cell>
+  
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="primary" (click)="startEdit(row.id)"> <!--  -->
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="accent" (click)="addReturn(row.id)"> <!--  -->
+            <mat-icon aria-label="return">compare_arrows</mat-icon>
+          </button>
+  
+          <button mat-icon-button color="warn" (click)="deleteItem(row.id)"> <!--  -->
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+      <mat-paginator 
+        [pageSizeOptions]="[5, 10, 20, 50, 100]"
+        showFirstLastButtons 
+        aria-label="oldal">
+      </mat-paginator>
+  
+      <div class="no-results" [style.display]="dataSource.data.length == 0 ? '' : 'none'">
+          Nincs eredmény
+      </div>
+  </div>
+  
+
+<!--
+    export interface Trip{
+        id:number;
+        car: Car;
+        driver: Driver;
+        date: Date;
+        tripType: string;
+        departureAddress: string;
+        arrivalAddress: string;
+        distance: number;
+        newKmAge: number;
+    }
+-->

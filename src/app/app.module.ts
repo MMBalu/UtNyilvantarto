@@ -18,12 +18,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AddDialogCarComponent } from './car/add-dialog/add-dialog.component';
 import { CarListComponent } from './car/car-list/car-list.component';
 import { MatSelectModule } from '@angular/material/select';
 import { DeleteDriverDialogComponent } from './driver/delete-driver-dialog/delete-driver-dialog.component';
 import { DeleteCarDialogComponent } from './car/delete-car-dialog/delete-car-dialog.component';
+import { TripListComponent } from './trip/trip-list/trip-list.component';
+import { AddTripDialogComponent } from './trip/add-trip-dialog/add-trip-dialog.component';
+import { DeleteTripDialogComponent } from './trip/delete-trip-dialog/delete-trip-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,10 @@ import { DeleteCarDialogComponent } from './car/delete-car-dialog/delete-car-dia
     CarListComponent,
     AddDialogCarComponent,
     DeleteDriverDialogComponent,
-    DeleteCarDialogComponent  
+    DeleteCarDialogComponent,
+    TripListComponent,
+    AddTripDialogComponent,
+    DeleteTripDialogComponent  
   ],
   imports: [
     BrowserModule,
@@ -49,6 +56,7 @@ import { DeleteCarDialogComponent } from './car/delete-car-dialog/delete-car-dia
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatAutocompleteModule,
     MatDatepickerModule,
     MatSelectModule,
     MatNativeDateModule,

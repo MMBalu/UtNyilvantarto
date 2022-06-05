@@ -6,19 +6,19 @@ export class Driver {
     @PrimaryGeneratedColumn()
     id: number;   
 
-    @Column()
+    @Column({ type: 'text', nullable: false })
     name: string;
 
-    @Column()
+    @Column({ type: 'text', nullable: false })
     birthdate: Date;
 
-    @Column()
+    @Column({ type: 'text', nullable: false })
     address: string;    
 
-    @Column()
+    @Column({ type: 'text', nullable: false })
     licenseNumber: string;
 
-    @Column()
+    @Column({ type: 'text', nullable: false })
     licenseExpireDate: Date;
 
     @OneToMany(type => Trip, trip => trip.driver)

@@ -13,6 +13,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Jogosítvány lájarati dátum</mat-header-cell>
       <mat-cell *matCellDef="let row" [ngClass]="{'make-bold': isLicenseExpired(row.licenseExpireDate)}"> 
         {{row.licenseExpireDate | date :'yyyy/MM/dd'}}
+        <span *ngIf="isLicenseExpired(row.licenseExpireDate)">‎ ‎ Lejárt!</span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="birthdate">

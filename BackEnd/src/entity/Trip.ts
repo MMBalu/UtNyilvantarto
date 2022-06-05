@@ -8,14 +8,23 @@ export class Trip{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(Type => Car, car => car.trips)
+    @ManyToOne(Type => Car, car => car.trips, {
+        eager: true,
+        cascade: true
+    })
     car: Car;
 
-    @ManyToOne(Type => Driver, driver => driver.trips)
+    @ManyToOne(Type => Driver, driver => driver.trips, {
+        eager: true,
+        cascade: true
+    })
     driver: Driver;
 
     @Column({ type: 'text', nullable: false })
     date: Date;
+
+    @Column({ type: 'text', nullable: false })
+    tripType: string;
     
     @Column({ type: 'text', nullable: false })
     departureAddress: string;

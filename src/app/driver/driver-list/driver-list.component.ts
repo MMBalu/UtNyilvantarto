@@ -30,7 +30,8 @@ export class DriverListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  isLicenseExpired(date: Date): boolean{
+  public isLicenseExpired = DriverListComponent.isLicenseExpired;
+  static isLicenseExpired(date: Date): boolean{
     const expireDate = new Date(date);
     expireDate.setMilliseconds(0);
     expireDate.setSeconds(0);

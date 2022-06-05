@@ -69,11 +69,6 @@ export class AddDialogComponent implements OnInit {
     console.log(this.driverControl);
   }
 
-  formControl = new FormControl('', [
-    Validators.required,
-    // Validators.email,
-  ]);
-
   getErrorMessage(child: string) {
     let controller = this.driverControl.get(child);
     if (!controller) return null;
