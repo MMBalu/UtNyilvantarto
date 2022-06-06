@@ -1,6 +1,6 @@
 
 <div class="container mat-elevation-z8">
-  <mat-table #carTable [dataSource]="dataSource" matSort class="mat-cell">
+  <mat-table #carTable [dataSource]="dataSource" matSort class="mat-cell" matSortActive="consumption" matSortDirection="asc" matSortDisableClear>
     <ng-container matColumnDef="type">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Típus</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.type}}</mat-cell>

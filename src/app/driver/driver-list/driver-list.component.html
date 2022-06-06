@@ -1,6 +1,6 @@
 
 <div class="container mat-elevation-z8">
-  <mat-table #driverTable [dataSource]="dataSource" matSort class="mat-cell">
+  <mat-table #driverTable [dataSource]="dataSource" matSort class="mat-cell" matSortActive="name" matSortDirection="asc" matSortDisableClear>
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Név</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>

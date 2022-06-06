@@ -1,0 +1,143 @@
+
+
+<div class="form">
+    <mat-form-field appearance="fill" color="accent">
+        <mat-label>Month and Year</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="date">
+        <mat-hint>YYYY. MM.</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        startView="multi-year"
+                        (monthSelected)="setMonthAndYear($event, dp)"
+                        panelClass="example-month-picker">
+        </mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field >
+        <mat-label>Autó</mat-label>
+        <mat-select class="form-control" required [formControl]="car">
+            <mat-option>---</mat-option>
+            <mat-option *ngFor="let car of cars" [value]="car">
+                <span>{{car.type}}</span>
+                <small> ‎  ‎  r.sz.: {{car.licenseNumber}}</small>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" [disabled]="date.invalid || car.invalid" 
+    (click)="loadTrips(date.value, car.value)">Betöltés</button>
+</div>
+
+<!-- Privát táblázat -->
+<div class="container mat-elevation-z8 matTable">
+    <h1>Privát utak</h1>
+    <mat-table #tripTable [dataSource]="dataSourcePrivate" matSort class="mat-cell" matSortActive="date" matSortDirection="asc" matSortDisableClear>
+      <ng-container matColumnDef="car">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Autó</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p>{{row.car.type}} <br/> <small>r.sz.: {{row.car.licenseNumber}}</small></p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="driver">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sofőr</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p>{{row.driver.name}} <br/> <small>j.sz.: {{row.driver.licenseNumber}}</small></p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Dátum</mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+          {{row.date | date :'yyyy. MM. dd. HH:mm'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tripType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Típus</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.tripType}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="departureAddress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Indulási cím</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.departureAddress}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="arrivalAddress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Érkezési cím</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.arrivalAddress}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="distance">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Távolság</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.distance}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="newKmAge">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Új Kmóra állás</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.newKmAge}}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+      <mat-paginator #paginatorPrivate
+        [pageSizeOptions]="[5, 10, 20, 50, 100]"
+        showFirstLastButtons 
+        aria-label="oldal">
+      </mat-paginator>
+  
+      <div class="no-results" [style.display]="dataSourcePrivate.data.length == 0 ? '' : 'none'">
+          Nincs eredmény
+      </div>
+</div>
+
+<!-- Céges táblázat -->
+<div class="container mat-elevation-z8 matTable"> 
+    <h1>Céges utak</h1>
+    <mat-table #tripTable [dataSource]="dataSourceCorporate" matSort class="mat-cell" matSortActive="date" matSortDirection="asc" matSortDisableClear>
+      <ng-container matColumnDef="car">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Autó</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p>{{row.car.type}} <br/> <small>r.sz.: {{row.car.licenseNumber}}</small></p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="driver">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sofőr</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p>{{row.driver.name}} <br/> <small>j.sz.: {{row.driver.licenseNumber}}</small></p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Dátum</mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+          {{row.date | date :'yyyy. MM. dd. HH:mm'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tripType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Típus</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.tripType}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="departureAddress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Indulási cím</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.departureAddress}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="arrivalAddress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Érkezési cím</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.arrivalAddress}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="distance">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Távolság</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.distance}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="newKmAge">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Új Kmóra állás</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.newKmAge}}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginatorCorporate
+        [pageSizeOptions]="[5, 10, 20, 50, 100]"
+        showFirstLastButtons 
+        aria-label="oldal">
+    </mat-paginator>
+  
+    <div class="no-results" [style.display]="dataSourceCorporate.data.length == 0 ? '' : 'none'">
+        Nincs eredmény
+    </div>
+</div>

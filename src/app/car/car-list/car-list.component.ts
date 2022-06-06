@@ -6,6 +6,7 @@ import { Car } from 'src/app/models/Car';
 import { CarService } from 'src/app/services/car.service';
 import { AddCarDialogComponent } from '../add-car-dialog/add-car-dialog.component';
 import { DeleteCarDialogComponent } from '../delete-car-dialog/delete-car-dialog.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-car-list',
@@ -32,11 +33,12 @@ export class CarListComponent implements OnInit, AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
-
   
 
   async ngOnInit(): Promise<void> {

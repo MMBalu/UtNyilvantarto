@@ -29,6 +29,8 @@ import { TripListComponent } from './trip/trip-list/trip-list.component';
 import { AddTripDialogComponent } from './trip/add-trip-dialog/add-trip-dialog.component';
 import { DeleteTripDialogComponent } from './trip/delete-trip-dialog/delete-trip-dialog.component';
 import { ErrorMsgDialogComponent } from './error-msg-dialog/error-msg-dialog.component';
+import { ReportComponent } from './report/report.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { ErrorMsgDialogComponent } from './error-msg-dialog/error-msg-dialog.com
     TripListComponent,
     AddTripDialogComponent,
     DeleteTripDialogComponent,
-    ErrorMsgDialogComponent  
+    ErrorMsgDialogComponent,
+    ReportComponent  
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { ErrorMsgDialogComponent } from './error-msg-dialog/error-msg-dialog.com
     MatButtonModule,
     MatListModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatDialogModule,
     MatFormFieldModule,

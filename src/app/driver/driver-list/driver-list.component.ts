@@ -6,6 +6,7 @@ import { Driver } from 'src/app/models/Driver';
 import { DriverService } from 'src/app/services/driver.service';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { DeleteDriverDialogComponent } from '../delete-driver-dialog/delete-driver-dialog.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-driver-list',
@@ -25,9 +26,11 @@ export class DriverListComponent implements OnInit, AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   public isLicenseExpired = DriverListComponent.isLicenseExpired;
