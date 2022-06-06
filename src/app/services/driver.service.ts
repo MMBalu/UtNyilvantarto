@@ -1,14 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { Driver } from '../models/Driver';
+import { ErrorDialog } from './errorDialog';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DriverService {
 
-  constructor(private http: HttpClient) {}
+  private errorDialog: ErrorDialog = new ErrorDialog(this.dialog);
+
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog
+  ) {}
 
   async getAll(){
     let res : Driver[] = [];
@@ -33,6 +40,12 @@ export class DriverService {
 
   async delete(driver: Driver){
     let i : number = driver.id
-    return await lastValueFrom(this.http.delete<Driver>('/api/drivers/' + i));
+     
+    try{
+      return await lastValueFrom(this.http.delete<Driver>('/api/drivers/' + i)); 
+    } catch (e: any) {
+      this.errorDialog.catchHttpError(e)
+      return ;
+    } 
   }
 }

@@ -5,18 +5,25 @@
       <a class="nav-item nav-link" routerLink="">Út nyílvántartó App</a>
     </span>
     <span class="spacer"></span>
-    <span>
-      <a class="nav-item nav-link" routerLink="">Utak</a>
-      <a class="nav-item nav-link" routerLink="">Jelentés</a>
-      <a class="nav-item nav-link" routerLink="/carlist">Autók</a>
-      <a class="nav-item nav-link" routerLink="/driverlist">Sofőrök</a>
-      <!-- 
-      <a class="nav-item nav-link" routerLink="category-form">tartalék</a>
-      -->
+    <span class="nav-links">
+      <a class="nav-item nav-link" routerLink="" [ngClass]="{'active-route': isUrlMatch('')}">Utak</a>
+      <a class="nav-item nav-link" routerLink="/report" [ngClass]="{'active-route': isUrlMatch('report')}">Jelentés</a>
+      <a class="nav-item nav-link" routerLink="/carlist" [ngClass]="{'active-route': isUrlMatch('carlist')}">Autók</a>
+      <a class="nav-item nav-link" routerLink="/driverlist" [ngClass]="{'active-route': isUrlMatch('driverlist')}">Sofőrök</a>
     </span>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="container-fluid">
-  <router-outlet></router-outlet>
+  <router-outlet #data="outlet"></router-outlet>
 </div>
+<br />
+<!-- {{data.component}} 
+<button mat-button (click)="teszt()">teszt</button>-->
+<!--
+  {{this.data.activatedRoute.toString()}}  <br/>
+  <input type="text" (value)="tesztinput">  <br/>
+  {{isUrlMatch(tesztinput)}}  <br/>
+  {{this.data.activatedRoute.toString().endsWith("'" + tesztinput + "
+-->
+<!-- [ngClass]="{'active-route': isUrlMatch(row.licenseExpireDate)}" -->

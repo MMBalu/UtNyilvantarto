@@ -1,3 +1,4 @@
+@use '/src/styles.scss';
 
 mat-toolbar {
 
@@ -9,13 +10,38 @@ mat-toolbar {
         text-align: center;
         text-decoration: none;
         display: inline-block;
+        
+    }
+    .nav-links{
+        $hover-color: rgb(23, 70, 211);
+        $select-color: rgb(195, 0, 195);
+        
+        a{
+            &:hover{
+                background-color: $hover-color;
+
+                &.active-route{
+                    background-color: lighten($select-color, 15%)
+                }
+            }
+
+            &.active-route{
+                background-color: $select-color
+            }
+        }
+       
     }
 
-    a:hover, a:focus {
-        background-color: rgb(23, 70, 211);
-    }
-
+    
+    
+    
+    
+    
+    
+    
     .spacer{
         flex: 1 1 auto;
     }
+
+    
 }

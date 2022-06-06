@@ -6,6 +6,7 @@ import { TripListComponent } from './trip/trip-list/trip-list.component';
 
 const routes: Routes = [
   {path: '', component: TripListComponent},
+  {path: 'report', component: TripListComponent},
   { path: 'driverlist', component: DriverListComponent },
   { path: 'carlist', component: CarListComponent}
 ];

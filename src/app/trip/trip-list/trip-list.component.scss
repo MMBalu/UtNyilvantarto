@@ -1,5 +1,16 @@
 @import '/src/assets/scss/itemlist.scss';
 
+
+  .mat-cell:nth-child(3),
+  .mat-header-cell:nth-child(3){
+    flex: 0 0 135px;
+  }
+
+  .mat-cell:nth-child(4),
+  .mat-header-cell:nth-child(4){
+    flex: 0 0 60px;
+  }
+
   .mat-cell:nth-child(7),
   .mat-header-cell:nth-child(7){
     flex: 0 0 70px;
@@ -10,5 +21,5 @@
   }
   .mat-cell:nth-child(9),
   .mat-header-cell:nth-child(9){
-    flex: 0 0 200px;
+    flex: 0 0 125px;
   }

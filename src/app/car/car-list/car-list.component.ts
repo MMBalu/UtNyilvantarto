@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import { Car } from 'src/app/models/Car';
 import { CarService } from 'src/app/services/car.service';
-import { AddDialogCarComponent } from '../add-dialog/add-dialog.component';
+import { AddCarDialogComponent } from '../add-car-dialog/add-car-dialog.component';
 import { DeleteCarDialogComponent } from '../delete-car-dialog/delete-car-dialog.component';
 
 @Component({
@@ -50,7 +50,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
   addNew() {
     const dialogRef = this.dialog.open(
-      AddDialogCarComponent,
+      AddCarDialogComponent,
       {
         data: {edit: false}
       }
@@ -71,7 +71,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
     }
 
     const dialogRef = this.dialog.open(
-      AddDialogCarComponent,
+      AddCarDialogComponent,
       {
         data: {car: car, edit: true}
       }

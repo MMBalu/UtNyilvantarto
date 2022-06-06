@@ -1,0 +1,14 @@
+.dialog{
+    display: flex;
+    flex-direction: column;
+    min-width: 600px;
+    width: 100%;
+
+    h2 {
+        align-self: center
+    }
+
+    button {
+        align-self: center;
+    }
+}

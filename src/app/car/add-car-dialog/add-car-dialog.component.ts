@@ -6,10 +6,10 @@ import { CarService } from 'src/app/services/car.service';
 
 @Component({
   selector: 'app-add-dialog',
-  templateUrl: './add-dialog.component.html',
-  styleUrls: ['./add-dialog.component.scss']
+  templateUrl: './add-car-dialog.component.html',
+  styleUrls: ['./add-car-dialog.component.scss']
 })
-export class AddDialogCarComponent implements OnInit {
+export class AddCarDialogComponent implements OnInit {
   fuels : string[] = [
     "benzin",
     "dízel",
@@ -20,7 +20,7 @@ export class AddDialogCarComponent implements OnInit {
   ]
 
   constructor(
-    private dialogRef: MatDialogRef<AddDialogCarComponent>,
+    private dialogRef: MatDialogRef<AddCarDialogComponent>,
     private carService: CarService,
     @Inject(MAT_DIALOG_DATA) public data: { car: Car| null | undefined, edit: boolean} 
   ) { 
