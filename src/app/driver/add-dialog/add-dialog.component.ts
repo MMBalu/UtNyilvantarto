@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Driver } from 'src/app/models/Driver';
 import { DriverService } from 'src/app/services/driver.service';
@@ -16,6 +17,9 @@ export class AddDialogComponent implements OnInit {
   maxBirthDate: Date;
   minLicenseExpireDate: Date;
   maxLicenseExpireDate: Date;
+
+  selectedBirthDate!: Date | undefined;
+  selectedLicenseDate!: Date | undefined;
 
   constructor(
     private dialogRef: MatDialogRef<AddDialogComponent>,
@@ -34,10 +38,13 @@ export class AddDialogComponent implements OnInit {
     if(this.data.edit === true){
       this.driverControl.get('id')!.setValue(this.data.driver?.id);
       this.driverControl.get('name')!.setValue(this.data.driver?.name);
-      this.driverControl.get('birthdate')!.setValue(this.data.driver?.birthdate);
+      this.driverControl.get('birthdate')!.setValue( new Date(this.data.driver!.birthdate).toISOString());
       this.driverControl.get('address')!.setValue(this.data.driver?.address);
       this.driverControl.get('licenseNumber')!.setValue(this.data.driver?.licenseNumber);
-      this.driverControl.get('licenseExpireDate')!.setValue(this.data.driver?.licenseExpireDate);
+      this.driverControl.get('licenseExpireDate')!.setValue( new Date(this.data.driver!.licenseExpireDate).toISOString());
+
+      this.selectedBirthDate = this.data.driver?.birthdate;
+      this.selectedLicenseDate = this.data.driver?.licenseExpireDate;
     }
   }
 

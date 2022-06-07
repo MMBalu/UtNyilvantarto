@@ -14,7 +14,9 @@
       <div class="form">
           <mat-form-field color="accent">
             <mat-label>Születési dátum</mat-label>
-            <input matInput [matDatepicker]="picker" [min]="minBirthDate" [max]="maxBirthDate" formControlName="birthdate">
+            <input matInput #matBirthdate [matDatepicker]="picker" 
+            [min]="minBirthDate" [max]="maxBirthDate" formControlName="birthdate"
+            >
 
             <mat-hint>17 és 100 év közötti. (YYYY/MM/DD)</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -40,7 +42,7 @@
       <div class="form">
           <mat-form-field color="accent">
             <mat-label>Jogosítvány lejárati dátum</mat-label>
-            <input matInput [matDatepicker]="picker2" [min]="minLicenseExpireDate" [max]="maxLicenseExpireDate"
+            <input matInput [matDatepicker]="picker2" #matBirthdate [min]="minLicenseExpireDate" [max]="maxLicenseExpireDate"
             formControlName="licenseExpireDate">
             <mat-hint>Jelenleg is érvényes. (YYYY/MM/DD)</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>

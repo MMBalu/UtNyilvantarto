@@ -2,8 +2,10 @@
 
 <div class="form">
     <mat-form-field appearance="fill" color="accent">
-        <mat-label>Month and Year</mat-label>
-        <input matInput [matDatepicker]="dp" [formControl]="date">
+        <mat-label>Év és hónap</mat-label>
+        <!--  -->
+        <input class="hide" type=""matInput [matDatepicker]="dp" [formControl]="date" [min]="minDate">
+        {{date.value | date:"yyyy. MM."}}
         <mat-hint>YYYY. MM.</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
         <mat-datepicker #dp
@@ -11,6 +13,7 @@
                         (monthSelected)="setMonthAndYear($event, dp)"
                         panelClass="example-month-picker">
         </mat-datepicker>
+        <mat-error> Mező kitöltése kötelező! </mat-error>
     </mat-form-field>
 
     <mat-form-field >
@@ -22,10 +25,44 @@
                 <small> ‎  ‎  r.sz.: {{car.licenseNumber}}</small>
             </mat-option>
         </mat-select>
+        <mat-error> Mező kitöltése kötelező! </mat-error>
     </mat-form-field>
-
+    
     <button mat-flat-button color="primary" [disabled]="date.invalid || car.invalid" 
     (click)="loadTrips(date.value, car.value)">Betöltés</button>
+</div>
+
+<div class="car-details" *ngIf="loadedCar"> 
+  <h1>Jelentés</h1>
+  <h3>Év. hónap. : ‎  ‎ {{loadedDate | date:"yyyy. MM."}}</h3>
+  <h3>Autó adatai:</h3>
+  <table>
+    <tr>
+      <td>Típus:</td>
+      <td>{{this.loadedCar.type}}</td>
+    </tr>
+    <tr>
+      <td>Rendszám:</td>
+      <td>{{this.loadedCar.licenseNumber}}</td>
+    </tr>
+    <tr>
+      <td>Üzemanyag típus:</td>
+      <td>{{this.loadedCar.fuelType}}</td>
+    </tr>
+    <tr>
+      <td>Fogyasztás: </td>
+      <td>{{this.loadedCar.consumption}}</td>
+    </tr>
+    <tr>
+      <td>Km óra állás hónapnyitáskor:</td>
+      <td *ngIf="firstTrip">{{(firstTrip!.newKmAge - firstTrip!.distance)}}</td>
+    </tr>
+    <tr>
+      <td>Km óra állás hónapzáráskor:</td>
+      <td>{{lastTrip!.newKmAge}}</td>
+    </tr>
+  
+  </table>
 </div>
 
 <!-- Privát táblázat -->
@@ -80,9 +117,29 @@
         aria-label="oldal">
       </mat-paginator>
   
-      <div class="no-results" [style.display]="dataSourcePrivate.data.length == 0 ? '' : 'none'">
+      <div class="no-results" [style.display]="hasLoaded && dataSourcePrivate.data.length == 0 ? '' : 'none'">
           Nincs eredmény
       </div>
+
+      <div class="table-details" *ngIf="loadedCar"> 
+        <table>
+          <tr>
+            <td>Megtett távolság:</td>
+            <td>{{privKmSum}} <span> Km</span></td>
+          </tr>
+          <tr>
+            <td>Üzemanyag költség:</td>
+            <td>{{ (privKmSum/100) * loadedCar.consumption * 480 | number:'1.0-0'}} <span> Ft</span></td>
+          </tr> <tr>
+            <td>Átalány költség:</td>
+            <td>{{ privKmSum * 10 | number:'1.0-0' }} <span> Ft</span></td>
+          </tr> <tr>
+            <td>Össz. költség:</td>
+            <td>{{ ((privKmSum/100) * loadedCar.consumption * 480) + (privKmSum * 10) | number:'1.0-0' }} <span> Ft</span></td>
+          </tr>
+        </table>
+      </div>
+
 </div>
 
 <!-- Céges táblázat -->
@@ -137,7 +194,26 @@
         aria-label="oldal">
     </mat-paginator>
   
-    <div class="no-results" [style.display]="dataSourceCorporate.data.length == 0 ? '' : 'none'">
+    <div class="no-results" [style.display]="hasLoaded && dataSourceCorporate.data.length == 0 ? '' : 'none'">
         Nincs eredmény
+    </div>
+
+    <div class="table-details" *ngIf="loadedCar"> 
+      <table>
+        <tr>
+          <td>Megtett távolság:</td>
+          <td>{{corpKmSum}} <span> Km</span></td>
+        </tr>
+        <tr>
+          <td>Üzemanyag költség:</td>
+          <td>{{ (corpKmSum/100) * loadedCar.consumption * 480 | number:'1.0-0'}} <span> Ft</span></td>
+        </tr> <tr>
+          <td>Átalány költség:</td>
+          <td>{{ corpKmSum * 10 | number:'1.0-0' }} <span> Ft</span></td>
+        </tr> <tr>
+          <td>Össz. költség:</td>
+          <td>{{ ((corpKmSum/100) * loadedCar.consumption * 480) + (corpKmSum * 10) | number:'1.0-0' }} <span> Ft</span></td>
+        </tr>
+      </table>
     </div>
 </div>
