@@ -16,7 +16,7 @@ import { TripService } from '../services/trip.service';
 export class ReportComponent implements OnInit {
 
   hasLoaded: boolean = false;
-  cars: Car[] = [];
+  cars: Car[]| undefined = [];
   trips: Trip[] = [];
 
   minDate: Date = new Date(2022, 0, 1);

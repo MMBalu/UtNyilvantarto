@@ -10,7 +10,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {DriverListComponent } from './driver/driver-list/driver-list.component';
 import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
-import {HttpClientModule } from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AddDialogComponent } from './driver/add-dialog/add-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -31,6 +31,8 @@ import { DeleteTripDialogComponent } from './trip/delete-trip-dialog/delete-trip
 import { ErrorMsgDialogComponent } from './error-msg-dialog/error-msg-dialog.component';
 import { ReportComponent } from './report/report.component';
 import { MatSortModule } from '@angular/material/sort';
+import { LoginComponent } from './login/login.component';
+import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { MatSortModule } from '@angular/material/sort';
     AddTripDialogComponent,
     DeleteTripDialogComponent,
     ErrorMsgDialogComponent,
-    ReportComponent  
+    ReportComponent,
+    LoginComponent  
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,11 @@ import { MatSortModule } from '@angular/material/sort';
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

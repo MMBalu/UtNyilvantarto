@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
+//import { ErrorMsgDialogComponent } from '../error-msg-dialog/error-msg-dialog.component';
 
 import { Car } from '../models/Car';
 import { ErrorDialog } from './errorDialog';
@@ -16,26 +17,41 @@ export class CarService {
   constructor(
     private http: HttpClient,
     private dialog: MatDialog
+    //private errorMsgDialogComponent: ErrorMsgDialogComponent
   ) {}
 
   async getAll(){
     let res : Car[] = [];
-    
     try{
-      res = await lastValueFrom(this.http.get<Car[]>('api/cars'));
-    } catch(err){
-      res = [];
+      try{
+       res = await lastValueFrom(this.http.get<Car[]>('api/cars'));
+      } catch(err){
+        res = [];
+      }
+    } catch (e: any) {
+      this.errorDialog.catchHttpError(e)
+      return ;
     }
     /*res = await lastValueFrom(this.http.get<Car[]>('/api/cars'));*/
     return res;
   }
 
   async post(car: Car){
-    return await lastValueFrom(this.http.post<Car>('/api/cars', car));
+    try{
+       return await lastValueFrom(this.http.post<Car>('/api/cars', car));
+    } catch (e: any) {
+      this.errorDialog.catchHttpError(e)
+      return ;
+    }
   }
 
   async put(car: Car){
-    return await lastValueFrom(this.http.put<Car>('/api/cars', car));
+    try{
+      return await lastValueFrom(this.http.put<Car>('/api/cars', car));
+    } catch (e: any) {
+      this.errorDialog.catchHttpError(e)
+      return ;
+    }
   }
 
   async delete(car: Car){

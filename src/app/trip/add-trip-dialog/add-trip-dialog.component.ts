@@ -19,7 +19,7 @@ export class AddTripDialogComponent implements OnInit {
 
   selectedCar: Car|undefined;
   selectedDriver: Driver|undefined;
-  cars: Car[] = [];
+  cars: Car[]| undefined = [];
   drivers: Driver[] = [];
 
   isExpired(date: Date): boolean{
@@ -114,6 +114,9 @@ export class AddTripDialogComponent implements OnInit {
   async loadCars() {
     this.cars = await this.carService.getAll();
     //this.tripControl.get('car')?.value.id
+    if(!this.cars) {
+      return;
+    }
     for(let i = 0; i < this.cars.length; i++){
       if(this.tripControl.get('car')?.value.id === this.cars[i].id) this.selectedCar = this.cars[i];
     }

@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 export class CarListComponent implements OnInit, AfterViewInit {
   
   car!: Car;
-  cars: Car[] = [];
+  cars: Car[] |undefined = [];
   displayedColumns = ['type', 'licenseNumber', 'fuelType', 'consumption', 'kmAge', 'buttons'];
   dataSource = new MatTableDataSource<Car>(this.cars);
   /*
@@ -47,6 +47,9 @@ export class CarListComponent implements OnInit, AfterViewInit {
   
   async loadCars() {
       this.cars = await this.carService.getAll();
+      if(!this.cars){
+        this.cars = [];
+      }
       this.dataSource.data = this.cars;
   }
 
@@ -68,6 +71,9 @@ export class CarListComponent implements OnInit, AfterViewInit {
   startEdit(id: number) {
     let car: any = {};
 
+    if(!this.cars){
+      return;
+    }
     for(let c of this.cars){
       if(c.id === id) car = c;
     }
@@ -88,7 +94,9 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
   deleteItem(id: number){
     let car: any = {};
-
+    if(!this.cars) {
+      return;
+    }
     for(let c of this.cars){
       if(c.id === id) car = c;
     }

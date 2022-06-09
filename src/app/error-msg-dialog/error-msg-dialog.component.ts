@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 })
 export class ErrorMsgDialogComponent implements OnInit {
   static dialog: MatDialog;
+  message: string[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<ErrorMsgDialogComponent>,
@@ -18,32 +19,36 @@ export class ErrorMsgDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openDialog(){
+    const dialogRef = this.dialog.open(
+      ErrorMsgDialogComponent,
+      {
+        data: {messages: this.message}
+      });
+  }
+
   cancel(): void {
     this.dialogRef.close(-1);
   }
 
-  catchHttpError(e: any): void {
-    //console.log("Error elkapva: " + e.name);
-    //console.log(e);
-    /*
-      error.message:
-        SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
-    */
-    let message: string[] = [];
-
-    if(e.name == "HttpErrorResponse") {
-      message.push("A server a következő választ küldte:");
-      message.push( "Állapot kód: " + e.status);
-      message.push("Üzenet: " + e.error.message);
-      if(e.error.message === "SQLITE_CONSTRAINT: FOREIGN KEY constraint failed"){
-        message.push("Valószínüleg kötődik az egyik utazáshoz.")
-      }
-
-      const dialogRef = this.dialog.open(
+  static catchAuthError(msg: string): void {
+    const dialogRef = this.dialog.open(
       ErrorMsgDialogComponent,
       {
-        data: {messages: message}
+        data: {messages: msg}
       });
-    }
   }
+/*
+  catchHttpError(e: any): void {
+    
+    if(e.name == "HttpErrorResponse") {
+      this.message.push("A server a következő választ küldte:");
+      this.message.push( "Állapot kód: " + e.status);
+      this.message.push("Üzenet: " + e.error.message);
+      if(e.error.message === "SQLITE_CONSTRAINT: FOREIGN KEY constraint failed"){
+        this.message.push("Valószínüleg kötődik az egyik utazáshoz.")
+      }
+      this.openDialog()
+    }
+  }*/
 }
