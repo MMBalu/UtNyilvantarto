@@ -1,18 +1,22 @@
-<form [formGroup]="form">
-    <fieldset>
-        <legend>Login</legend>
-        <div class="form-field">
-            <label>Email:</label>
-            <input name="email" formControlName="email">
+<div class="container">
+    <form [formGroup]="form" >
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="form-control" placeholder="Név"  required formControlName="email">
+                <mat-error>Mező kitöltése kötelező!</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-field">
-            <label>Password:</label>
-            <input name="password" formControlName="password" 
-                   type="password">
+
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput type="password" #input class="form-control" placeholder="Jelzsó"  required formControlName="password">
+                <mat-error>Mező kitöltése kötelező!</mat-error>
+            </mat-form-field>
         </div>
-    </fieldset>
-    <div class="form-buttons">
-        <button class="button button-primary" 
-                (click)="login()">Login</button>
-    </div>
-</form>`})
+
+        <div>
+            <button mat-flat-button color="primary"  [disabled]="!form.valid"  (click)="login()">Belépés</button>
+            <button mat-flat-button color="accent"  [disabled]="!form.valid"  (click)="signUp()">Regisztráció</button>
+        </div>
+    </form>
+</div>

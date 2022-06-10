@@ -16,7 +16,7 @@ import { DeleteTripDialogComponent } from '../delete-trip-dialog/delete-trip-dia
 export class TripListComponent implements OnInit {
 
   trips: Trip[] = [];
-  displayedColumns = ['car', 'driver', 'date', 'tripType','departureAddress',
+  displayedColumns = ['car.licenseNumber', 'driver.name', 'date', 'tripType','departureAddress',
     'arrivalAddress','distance','newKmAge', 'buttons'];
   dataSource = new MatTableDataSource<Trip>(this.trips);
 

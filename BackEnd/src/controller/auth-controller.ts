@@ -17,73 +17,35 @@ const RSA_PRIVATE_KEY = fs.readFileSync(path.resolve(__dirname,'../keys/private.
 export class UserContoller extends Controller{
     repository = AppDataSource.getRepository(User);
 
-   // email: string
-    //password: string
-    
-    async loginRoute2(req: Request, res: Response) {
-
-        const email =  req.body?.email;
-        const password =  req.body?.password;
-
-        const expireIn = 180;
-
-        let userProm = await this.validateEmailAndPassword(email, password);
-        let user: User = userProm[0];
-     
-         if (user) {
-            const userId: string = user.id.toFixed(0);
-     
-            const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
-                     algorithm: 'RS256',
-                     expiresIn: expireIn,
-                     subject: userId
-                 })
-     
-               // send the JWT back to the user
-               res.status(200).json({
-                    idToken: jwtBearerToken,
-                    expiresIn: expireIn
-                });                      
-         }
-         else {
-             // send status 401 Unauthorized
-             res.sendStatus(401); 
-         }
-     }
-
     loginRoute = async (req, res) => {
         const email =  req.body.email;
         const password =  req.body.password;
-
-        const expireIn = 180;
+      
+        const expireIn = 60*60;
 
         let user: User = await this.validateEmailAndPassword(email, password);
-        //let user: User = userProm;
-        console.log(user);
-
-         if (user) {
+        if (user) {
             const userId: string = user.id.toFixed(0);
      
             const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
                      algorithm: 'RS256',
                      expiresIn: expireIn,
                      subject: userId
-                 })
-     /*
-               // send the JWT back to the user
-               res.cookie("SESSIONID", jwtBearerToken, {httpOnly:true, secure:true});
-               console.log('cookie have created successfully');
-               */
-               res.status(200).json({
-                    idToken: jwtBearerToken,
-                    expiresIn: expireIn
-                });    
-                                  
-         }
-         else {
-             // send status 401 Unauthorized
-             res.sendStatus(401); 
-         }
+            })
+            /*
+            // send the JWT back to the user
+            res.cookie("SESSIONID", jwtBearerToken, {httpOnly:true, secure:true});
+            console.log('cookie have created successfully');
+            */
+            res.status(200).json({
+                idToken: jwtBearerToken,
+                expiresIn: expireIn
+            });                   
+        }
+        else {
+            // send status 401 Unauthorized
+            res.sendStatus(401); 
+        }
     }
 
     validateEmailAndPassword = async (emailIn: string, passwordIn: string) =>{
@@ -102,6 +64,7 @@ export class UserContoller extends Controller{
              
             console.log("catchben jártam.")
          }
+        if(!user){return null;}
         if(user.password == passwordIn){
             return user;
             console.log("pass egyezikben jártam.")

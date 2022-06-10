@@ -38,11 +38,11 @@ export function getRouter(){
     router.put('/cars', checkIfAuthenticated, carController.update);
     router.delete('/cars/:id', checkIfAuthenticated, carController.delete);
 
-    router.get('/trips', tripController.getAll);
-    router.get('/trips/:id', tripController.getOne);
-    router.post('/trips', tripController.create);
-    router.put('/trips', tripController.update);
-    router.delete('/trips/:id', tripController.delete);
+    router.get('/trips', checkIfAuthenticated,  tripController.getAll);
+    router.get('/trips/:id', checkIfAuthenticated,  tripController.getOne);
+    router.post('/trips', checkIfAuthenticated,  tripController.create);
+    router.put('/trips', checkIfAuthenticated,  tripController.update);
+    router.delete('/trips/:id', checkIfAuthenticated,  tripController.delete);
 
     router.route('/login').post(userController.loginRoute);
     router.get('/users', userController.getAll);

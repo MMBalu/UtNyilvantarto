@@ -1,6 +1,7 @@
 
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterOutlet, RouterState } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,31 @@ import { ActivatedRoute, Router, RouterOutlet, RouterState } from '@angular/rout
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
-  constructor(){ 
+
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ){ 
   }
 
   @ViewChild( 'data' ) data!: RouterOutlet;
 
   title = 'UtNyilvantarto';
+
+  isLogged(): boolean {
+    let loc: string| null = localStorage.getItem('expires_at');
+    if(!loc){
+      return false;
+    }
+    if(new Date(loc).getTime() < new Date().getTime()){
+      return false;
+    }
+    return true;
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
 
   teszt(){
     //console.log(this.data.component);
@@ -23,6 +42,7 @@ export class AppComponent {
     //Object.toString
   }
 
+  
   isUrlMatch(url: string): boolean {
     let ret : boolean = false;
     try{

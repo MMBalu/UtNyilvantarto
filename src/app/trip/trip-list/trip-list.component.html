@@ -1,13 +1,13 @@
 <div class="container mat-elevation-z8">
-    <mat-table #tripTable [dataSource]="dataSource" matSort class="mat-cell" matSortActive="date" matSortDirection="asc" matSortDisableClear>
-      <ng-container matColumnDef="car">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Autó</mat-header-cell>
+    <mat-table #tripTable [dataSource]="dataSource" matSort class="mat-cell" matSortActive="date" matSortDirection="desc" matSortDisableClear>
+      <ng-container matColumnDef="car.licenseNumber">
+        <mat-header-cell *matHeaderCellDef >Autó</mat-header-cell>
         <mat-cell *matCellDef="let row">
           <p>{{row.car.type}} <br/> <small>r.sz.: {{row.car.licenseNumber}}</small></p>
         </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="driver">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Sofőr</mat-header-cell>
+      <ng-container matColumnDef="driver.name">
+        <mat-header-cell *matHeaderCellDef >Sofőr</mat-header-cell>
         <mat-cell *matCellDef="let row">
           <p>{{row.driver.name}} <br/> <small>j.sz.: {{row.driver.licenseNumber}}</small></p>
         </mat-cell>

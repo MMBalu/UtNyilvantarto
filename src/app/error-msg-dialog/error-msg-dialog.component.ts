@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-error-msg-dialog',
@@ -12,43 +13,72 @@ export class ErrorMsgDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<ErrorMsgDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { messages: string[]},
+    @Inject(MAT_DIALOG_DATA) public data: { messages: string[], header: string},
     private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
   }
 
-  openDialog(){
-    const dialogRef = this.dialog.open(
-      ErrorMsgDialogComponent,
-      {
-        data: {messages: this.message}
-      });
-  }
-
   cancel(): void {
     this.dialogRef.close(-1);
   }
+}
 
-  static catchAuthError(msg: string): void {
-    const dialogRef = this.dialog.open(
+@Injectable({
+  providedIn: 'root'
+})
+export class OpenErrorDialog{
+
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+  ){}
+
+  simpleInfo(head: string, messages: string[]): void {
+    this.dialog.open(
       ErrorMsgDialogComponent,
       {
-        data: {messages: msg}
-      });
-  }
-/*
-  catchHttpError(e: any): void {
-    
-    if(e.name == "HttpErrorResponse") {
-      this.message.push("A server a következő választ küldte:");
-      this.message.push( "Állapot kód: " + e.status);
-      this.message.push("Üzenet: " + e.error.message);
-      if(e.error.message === "SQLITE_CONSTRAINT: FOREIGN KEY constraint failed"){
-        this.message.push("Valószínüleg kötődik az egyik utazáshoz.")
+        data: {messages: messages, header: head}
       }
-      this.openDialog()
+    );
+  }
+
+  simpleError(messages: string[]): void {
+    this.dialog.open(
+      ErrorMsgDialogComponent,
+      {
+        data: {messages: messages}
+      }
+    );
+  }
+
+  catchHttpError(e: any): void {
+   
+    if(e.name == "HttpErrorResponse") {
+      let message: string[] = [];
+      message.push("A server a következő választ küldte:");
+      message.push( "Állapot kód: " + e.status);
+      message.push("Üzenet: " + e.error.message);
+      if(e.error.message === "SQLITE_CONSTRAINT: FOREIGN KEY constraint failed"){
+        message.push("Valószínüleg kötődik az egyik utazáshoz.")
+      }
+      if(e.error.message === "SQLITE_CONSTRAINT: UNIQUE constraint failed: user.email"){
+        message.push("Mát létezik ilyen felhasználónév az adatbázisban!")
+      }
+      if(e.status == 401){
+        this.router.navigate(['login']);
+        message.push("Nincs bejelentkezve!");
+      }
+      this.dialog.open(
+        ErrorMsgDialogComponent,
+        {
+          data: {messages: message}
+        }
+      );
     }
-  }*/
+  }
 }
+
+
+

@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
+import { OpenErrorDialog } from '../error-msg-dialog/error-msg-dialog.component';
 import { Trip } from '../models/Trip';
-import { ErrorDialog } from './errorDialog';
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +10,35 @@ import { ErrorDialog } from './errorDialog';
 
 export class TripService {
 
-  private errorDialog: ErrorDialog = new ErrorDialog(this.dialog);
-
   constructor(private http: HttpClient,
-    private dialog: MatDialog
+    private openErrorDialog: OpenErrorDialog
   ) {}
 
   async getAll(){
     let res : Trip[] = [];
-    
-    res = await lastValueFrom(this.http.get<Trip[]>('/api/trips'));
+    try{
+      res = await lastValueFrom(this.http.get<Trip[]>('/api/trips'));
+    } catch (e: any) {
+      this.openErrorDialog.catchHttpError(e);
+    } 
     return res;
   }
   async post(trip: Trip){
-    return await lastValueFrom(this.http.post<Trip>('/api/trips', trip));
+    try{
+      return await lastValueFrom(this.http.post<Trip>('/api/trips', trip));
+    } catch (e: any) {
+      this.openErrorDialog.catchHttpError(e)
+      return ;
+    } 
   }
 
   async put(trip: Trip){
-    return await lastValueFrom(this.http.put<Trip>('/api/trips', trip));
+    try{
+      return await lastValueFrom(this.http.put<Trip>('/api/trips', trip));
+    } catch (e: any) {
+      this.openErrorDialog.catchHttpError(e)
+      return ;
+    } 
   }
 
   async delete(trip: Trip){
@@ -36,7 +46,7 @@ export class TripService {
     try{
       return await lastValueFrom(this.http.delete<Trip>('/api/trips/' + i));//dummy
     } catch (e: any) {
-      this.errorDialog.catchHttpError(e)
+      this.openErrorDialog.catchHttpError(e)
       return ;
     } 
   }

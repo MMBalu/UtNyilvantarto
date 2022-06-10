@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
+import { OpenErrorDialog } from 'src/app/error-msg-dialog/error-msg-dialog.component';
 import { User } from 'src/app/models/User';
 
 @Injectable({
@@ -9,7 +10,10 @@ import { User } from 'src/app/models/User';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private openErrorDialog: OpenErrorDialog
+  ) {
   }
     
   async login(email:string, password:string ) {
@@ -20,13 +24,37 @@ export class AuthService {
     } catch(e){
       console.log(e);
     }
-      
-    //result?.subscribe(idToken: string, expiresIn: string)
-      // this is just the HTTP call, 
-      // we still need to handle the reception of the token
-      //.shareReplay(); //TODO ez nem működik a tutorialból
+
+      if(result){
+        this.setSession(result);
+      }
+      return result
+  }
+
+  async post(user: User){
+    try{
+       return await lastValueFrom(this.http.post<User>('/api/users', user));
+    } catch (e: any) {
+      this.openErrorDialog.catchHttpError(e)
+      return ;
+    }
+  }
+
+  async refreshToken() {
+    let expiresAt = localStorage.getItem('expires_at')
+    if(expiresAt && (new Date(0+expiresAt).getTime()-new Date().getTime() < 1*60)){
+      return;
+    }
+
+
+    let result;
+    let idToken = localStorage.getItem('id_token');
+    try{
+      result = await lastValueFrom(this.http.post<{idToken: string, expiresIn: string}>('/api/login', {idToken: idToken}));
+    } catch(e){
+      console.log(e);
+    }
     
-      
       if(result){
         this.setSession(result);
       }
@@ -38,7 +66,7 @@ export class AuthService {
 
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
-    console.log(localStorage.getItem('id_token'));
+    //console.log(localStorage.getItem('id_token'));
 
   }
 

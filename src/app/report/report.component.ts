@@ -81,12 +81,12 @@ export class ReportComponent implements OnInit {
       let testDate = new  Date(this.trips[i].date);
       //dátum szűrés
       if(testDate.getTime() < monthStart.getTime()) {
-        console.log("1dben:"+i);
+        //console.log("1dben:"+i);
         continue;
       }
 
       if(testDate.getTime() > monthEnd.getTime()){
-        console.log("2dben:"+i);
+        //console.log("2dben:"+i);
         continue;
       } 
       //kocsi szűrés
@@ -121,8 +121,8 @@ export class ReportComponent implements OnInit {
       } 
 
     }
-    //console.log(privData);
-    //console.log(corpData);
+    ////console.log(privData);
+    ////console.log(corpData);
 
     //Adatok betöltése a MatTable-be
     this.dataSourcePrivate.data = privData;
@@ -140,7 +140,7 @@ export class ReportComponent implements OnInit {
   }
   
   setMonthAndYear(date: Date, dp: MatDatepicker<Date>){
-    console.log(date);
+    //console.log(date);
     dp._applyPendingSelection;
     this.date.setValue(date);
     dp.close();

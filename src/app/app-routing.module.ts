@@ -8,12 +8,13 @@ import {AuthGuardService} from './services/auth/auth-guard.service'
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {path: '', component: TripListComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'report', component: ReportComponent},
-  { path: 'driverlist', component: DriverListComponent },
-  { path: 'carlist', component: CarListComponent, canActivate: [AuthGuardService]}
-];
+  {path: 'report', component: ReportComponent, canActivate: [AuthGuardService]},
+  {path: 'driverlist', component: DriverListComponent, canActivate: [AuthGuardService] },
+  {path: 'carlist', component: CarListComponent, canActivate: [AuthGuardService]},
+  {path: '', component: TripListComponent, canActivate: [AuthGuardService]},
+  {path: '', redirectTo: '/login', pathMatch: 'full' },
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

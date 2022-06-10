@@ -2,15 +2,20 @@
   <mat-toolbar-row>
     <mat-icon class="app-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
     <span>
-      <a class="nav-item nav-link" routerLink="">Út nyílvántartó App</a>
+      <a *ngIf="isLogged()"  class="nav-item nav-link" routerLink="">Út nyílvántartó App</a>
+      <a *ngIf="!isLogged()" class="nav-item nav-link">Út nyílvántartó App</a>
     </span>
     <span class="spacer"></span>
-    <span class="nav-links">
+    <span class="nav-links" *ngIf="isLogged()">
       <a class="nav-item nav-link" routerLink="" [ngClass]="{'active-route': isUrlMatch('')}">Utak</a>
       <a class="nav-item nav-link" routerLink="/report" [ngClass]="{'active-route': isUrlMatch('report')}">Jelentés</a>
       <a class="nav-item nav-link" routerLink="/carlist" [ngClass]="{'active-route': isUrlMatch('carlist')}">Autók</a>
       <a class="nav-item nav-link" routerLink="/driverlist" [ngClass]="{'active-route': isUrlMatch('driverlist')}">Sofőrök</a>
     </span>
+    <span *ngIf="isLogged()">
+      <button  mat-flat-button color="accent" routerLink="login"  (click)="authService.logout()">Kilépés</button>
+    </span>
+    
   </mat-toolbar-row>
 </mat-toolbar>
 
