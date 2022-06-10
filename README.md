@@ -14,7 +14,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Indítás
 - front-end és back-end telepítése  
 > npm run all-install  
+
 - back end indítása  
 > npm run start-backend  
+
 - front-end indítása  
 > npm run start  
